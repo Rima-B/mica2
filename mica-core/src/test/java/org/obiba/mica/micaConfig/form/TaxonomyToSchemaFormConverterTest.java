@@ -1,5 +1,8 @@
 package org.obiba.mica.micaConfig.form;
 
+import java.io.IOException;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.json.JSONArray;
@@ -7,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.obiba.mica.JSONUtils;
 import org.obiba.mica.config.JsonConfiguration;
 import org.obiba.mica.config.taxonomies.DatasetTaxonomy;
 import org.obiba.mica.config.taxonomies.NetworkTaxonomy;
@@ -44,6 +48,26 @@ public class TaxonomyToSchemaFormConverterTest {
     JSONArray definition = converter.toDefinition("en");
     String definitionStr = definition.toString(2);
     assertThat(definitionStr).isNotEmpty();
+  }
+
+  @Test
+  public void test_to_map() throws IOException, JSONException {
+    String json = "{\n" +
+        "    \"objectives\": \"This is the objective.\",\n" +
+        "    \"acronym\": \"XXX\",\n" +
+        "    \"methods-designs\": \"cohort_study\",\n" +
+        "    \"access\": \"bio_samples\",\n" +
+        "    \"start\": 2000,\n" +
+        "    \"end\": 2050,\n" +
+        "    \"methods-recruitments\": \"individuals\",\n" +
+        "    \"populations-dataCollectionEvents-administrativeDatabases\": [\n" +
+        "        \"toto\",\n" +
+        "        \"tutu\"\n" +
+        "    ]\n" +
+        "}";
+    Map<String, Object> map = JSONUtils.toMap(json);
+    String str = JSONUtils.toJSON(map);
+    assertThat(new JSONObject(str).toString(2)).isEqualTo(new JSONObject(json).toString(2));
   }
 
   @Configuration
