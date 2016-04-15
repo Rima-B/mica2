@@ -18,10 +18,10 @@ import org.obiba.mica.core.domain.Attribute;
 import org.obiba.mica.core.domain.AttributeAware;
 import org.obiba.mica.core.domain.Attributes;
 import org.obiba.mica.core.domain.Authorization;
-import org.obiba.mica.core.domain.PersonAware;
 import org.obiba.mica.core.domain.LocalizedString;
 import org.obiba.mica.core.domain.Membership;
 import org.obiba.mica.core.domain.Person;
+import org.obiba.mica.core.domain.PersonAware;
 import org.obiba.mica.file.Attachment;
 import org.obiba.mica.study.date.PersitableYear;
 import org.springframework.data.annotation.Transient;
@@ -100,6 +100,16 @@ public class Study extends AbstractGitPersistable implements AttributeAware, Per
   private String opal;
 
   private Attributes attributes;
+
+  private Map<String,Object> model;
+
+  public void setModel(Map<String, Object> model) {
+    this.model = model;
+  }
+
+  public Map<String, Object> getModel() {
+    return model;
+  }
 
   public LocalizedString getName() {
     return name;

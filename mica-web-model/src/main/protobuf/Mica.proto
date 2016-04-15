@@ -112,6 +112,8 @@ message StudyDto {
   optional PermissionsDto permissions = 28;
   repeated MembershipsDto memberships = 29;
 
+  optional string model = 30;
+
   message StudyMethodsDto {
     repeated string designs = 1;
     repeated LocalizedStringDto otherDesign = 2;

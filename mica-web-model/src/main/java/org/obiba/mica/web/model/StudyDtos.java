@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 
+import org.obiba.mica.JSONUtils;
 import org.obiba.mica.core.domain.Membership;
 import org.obiba.mica.core.domain.Person;
 import org.obiba.mica.micaConfig.service.MicaConfigService;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Component;
 import com.google.common.collect.Maps;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
-
 import static java.util.stream.Collectors.toList;
 
 @Component
@@ -129,6 +129,10 @@ class StudyDtos {
         .forEach(attribute -> builder.addAttributes(attributeDtos.asDto(attribute)));
     }
 
+    if(study.getModel() != null) {
+      builder.setModel(JSONUtils.toJSON(study.getModel()));
+    }
+
     return builder.build();
   }
 
@@ -182,6 +186,10 @@ class StudyDtos {
     }
     if(dto.getAttributesCount() > 0) {
       dto.getAttributesList().forEach(attributeDto -> study.addAttribute(attributeDtos.fromDto(attributeDto)));
+    }
+
+    if(dto.hasModel()) {
+      study.setModel(JSONUtils.toMap(dto.getModel()));
     }
 
     return study;

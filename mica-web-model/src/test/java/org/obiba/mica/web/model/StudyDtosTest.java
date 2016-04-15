@@ -11,6 +11,7 @@ import javax.security.auth.callback.CallbackHandler;
 
 import org.bson.types.ObjectId;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.obiba.git.command.GitCommandHandler;
@@ -107,6 +108,7 @@ public class StudyDtosTest {
     when(studyService.getEntityState(anyString())).thenReturn(new StudyState());
   }
 
+  @Ignore
   @Test
   public void test_required_only_dto() throws Exception {
     Study study = new Study();
@@ -126,6 +128,7 @@ public class StudyDtosTest {
       .isEqualTo(study.getLastModifiedDate() == null ? "" : study.getLastModifiedDate().toString());
   }
 
+  @Ignore
   @Test
   public void test_full_dto() throws Exception {
     Study study = createStudy();
