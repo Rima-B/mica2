@@ -13,10 +13,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import org.obiba.mica.AbstractGitPersistableResource;
+import org.obiba.mica.JSONUtils;
 import org.obiba.mica.NoSuchEntityException;
 import org.obiba.mica.core.domain.PublishCascadingScope;
 import org.obiba.mica.core.domain.RevisionStatus;
@@ -66,6 +68,16 @@ public class DraftStudyResource extends AbstractGitPersistableResource<StudyStat
   public Mica.StudyDto get() {
     subjectAclService.checkPermission("/draft/study", "VIEW", id);
     return dtos.asDto(studyService.findDraft(id), true);
+  }
+
+  @GET
+  @Path("/model")
+  @Timed
+  @Produces("application/json")
+  public Response getModel() {
+    subjectAclService.checkPermission("/draft/study", "VIEW", id);
+    Study study = studyService.findDraft(id);
+    return Response.ok(JSONUtils.toJSON(study.getModel())).build();
   }
 
   @PUT
